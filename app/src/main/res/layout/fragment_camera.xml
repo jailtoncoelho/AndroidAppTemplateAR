@@ -15,10 +15,10 @@
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
-        android:id="@+id/titleImage"
+        android:id="@+id/computador"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round"
+        android:src="@drawable/computador"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:background="@android:color/transparent"
