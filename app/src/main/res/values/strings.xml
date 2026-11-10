@@ -11,4 +11,13 @@
     <string name="camera">camera</string>
     <string name="change">change</string>
     <string name="profile">profile</string>
+    <string name="game_rules_title">Caçadores de Mito — Regras</string>
+    <string name="game_rules">Você começa com 3 vidas. A espada é perigosa: tocar nela na cena retira 1 vida, com intervalo de 1 segundo entre danos. Com 0 vidas, a partida termina. Selecione Espada na aba de modelos para exibi-la; os demais modelos não causam dano. Em AR, toque em Posicionar antes de tocar na espada.</string>
+    <string name="game_rules_summary">Evite tocar na espada: cada contato tira 1 vida (intervalo de 1 s). Com 0 vidas, Game Over.</string>
+    <string name="start_game">Iniciar partida</string>
+    <string name="remaining_lives">Vidas: %1$d / 3</string>
+    <string name="game_over_reason">Suas vidas acabaram.</string>
+    <string name="game_over_default_reason">A partida terminou.</string>
+    <string name="game_over_message">GAME OVER\n%1$s</string>
+    <string name="play_again">Jogar novamente</string>
 </resources>
