@@ -19,6 +19,9 @@
         android:theme="@style/Theme.Biologia"
         tools:targetApi="35">
         <activity
+            android:name=".ui.GameOverActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
