@@ -181,6 +181,12 @@ class ChangeObjectFragment : Fragment() {
             text = "Exibir"
 
             setOnClickListener {
+                val game = ViewModelProvider(requireActivity())[GameViewModel::class.java]
+                if (game.partidaIniciada) {
+                    Toast.makeText(requireContext(), R.string.match_active, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.navigation_camera)
+                    return@setOnClickListener
+                }
 
                 /*
                  * Informa para a tela da câmera

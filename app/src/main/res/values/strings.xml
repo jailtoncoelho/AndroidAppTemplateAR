@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android App Template AR</string>
+    <string name="app_name">Caçadores de Mito</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -8,7 +8,27 @@
     <string name="previous">Previous</string>
     <string name="template_ar">Template AR</string>
     <string name="thumbnail">example</string>
-    <string name="camera">camera</string>
-    <string name="change">change</string>
+    <string name="camera">Jogar</string>
+    <string name="change">Modelos</string>
     <string name="profile">profile</string>
+    <string name="game_rules_title">Caçadores de Mito — Regras</string>
+    <string name="game_rules">Recupere 5 escudos em 30 segundos! Escudos e espadas alternam a cada 2 segundos. Toque no escudo para coletar; evite a espada, que retira 1 das suas 3 vidas. Cada objeto só conta uma vez. Você vence ao recuperar 5 escudos e perde se as vidas ou o tempo acabarem. Em AR, posicione o objeto antes de jogar. O tempo pausa enquanto a cena não estiver pronta ou o aplicativo estiver fora de primeiro plano.</string>
+    <string name="game_rules_summary">Recupere 5 escudos em 30 s. Evite as espadas!</string>
+    <string name="start_hunt">Iniciar caça</string>
+    <string name="game_hud">Vidas: %1$d/3 · Escudos: %2$d/%3$d · %4$ds</string>
+    <string name="game_waiting">Tempo pausado: aguarde a cena ou posicione o objeto.</string>
+    <string name="next_object">Aguarde o próximo objeto…</string>
+    <string name="collect_shield">ESCUDO — toque para coletar!</string>
+    <string name="avoid_sword">ESPADA — não toque!</string>
+    <string name="victory_message">VITÓRIA!\n%1$s</string>
+    <string name="victory_reason">Você recuperou os 5 escudos!</string>
+    <string name="timeout_reason">O tempo acabou antes de recuperar os 5 escudos.</string>
+    <string name="final_score">Escudos recuperados: %1$d / 5</string>
+    <string name="match_active">A caça está em andamento. Termine a partida para explorar outros modelos.</string>
+    <string name="model_load_failed">Não foi possível abrir o modelo. Reposicione para tentar novamente.</string>
+    <string name="start_game">Iniciar partida</string>
+    <string name="game_over_reason">Suas vidas acabaram.</string>
+    <string name="game_over_default_reason">A partida terminou.</string>
+    <string name="game_over_message">GAME OVER\n%1$s</string>
+    <string name="play_again">Jogar novamente</string>
 </resources>
