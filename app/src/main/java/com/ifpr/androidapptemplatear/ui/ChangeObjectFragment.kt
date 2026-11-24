@@ -18,214 +18,89 @@ import androidx.navigation.fragment.findNavController
 import com.ifpr.androidapptemplatear.R
 
 class ChangeObjectFragment : Fragment() {
-
     private lateinit var sharedViewModel: SharedModelViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(
-            R.layout.fragment_changeobject,
-            container,
-            false
-        )
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
+        inflater.inflate(R.layout.fragment_changeobject, container, false)
 
-    override fun onViewCreated(
-        view: View,
-        savedInstanceState: Bundle?
-    ) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        sharedViewModel =
-            ViewModelProvider(requireActivity())[SharedModelViewModel::class.java]
-
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedModelViewModel::class.java]
         carregarModelos()
     }
 
-    /**
-     * Procura automaticamente todos os arquivos .glb
-     * existentes na pasta assets.
-     */
+    /** Lista automaticamente os modelos GLB presentes em app/src/main/assets. */
     private fun carregarModelos() {
-
-        val container =
-            view?.findViewById<LinearLayout>(R.id.categoryContainer)
-
+        val container = view?.findViewById<LinearLayout>(R.id.categoryContainer)
         container?.removeAllViews()
 
-        val modelos = requireContext()
-            .assets
-            .list("")
-            ?.filter { arquivo ->
-                arquivo.endsWith(".glb", ignoreCase = true)
-            }
+        val modelos = requireContext().assets.list("")
+            ?.filter { it.endsWith(".glb", ignoreCase = true) }
             ?.sorted()
             ?: emptyList()
 
         if (modelos.isEmpty()) {
-            Toast.makeText(
-                requireContext(),
-                "Nenhum modelo 3D encontrado.",
-                Toast.LENGTH_LONG
-            ).show()
-
+            Toast.makeText(requireContext(), "Nenhum personagem 3D encontrado.", Toast.LENGTH_LONG).show()
             return
         }
 
-        adicionarTitulo(container)
-
-        modelos.forEach { arquivo ->
-            adicionarModelo(container, arquivo)
-        }
-    }
-
-    /**
-     * Adiciona o título da lista de modelos.
-     */
-    private fun adicionarTitulo(container: LinearLayout?) {
-
         val titulo = TextView(requireContext()).apply {
-
-            text = "Modelos 3D"
-
-            setTextSize(
-                TypedValue.COMPLEX_UNIT_SP,
-                20f
-            )
-
+            text = "🎀 Escolha seu personagem"
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 22f)
             setTypeface(null, Typeface.BOLD)
-
-            setTextColor(Color.BLACK)
-
-            setPadding(
-                0,
-                24,
-                0,
-                16
-            )
+            setTextColor(Color.rgb(190, 65, 125))
+            setPadding(0, 18, 0, 20)
         }
-
         container?.addView(titulo)
+
+        modelos.forEach { adicionarModelo(container, it) }
     }
 
-    /**
-     * Cria um item da lista para cada modelo encontrado.
-     */
-    private fun adicionarModelo(
-        container: LinearLayout?,
-        arquivo: String
-    ) {
+    private fun nomeAmigavel(arquivo: String): String {
+        val baseName = arquivo.substringBeforeLast(".").replace(Regex(" \\(\\d+\\)$"), "").lowercase()
+        return when (baseName) {
+            "hello_kitty", "hellokitty" -> "Hello Kitty"
+            "my_melody", "mymelody" -> "My Melody"
+            "kuromi" -> "Kuromi"
+            "cinamon", "cinnamon", "cinnamoroll" -> "Cinnamoroll"
+            "pompompurin" -> "Pompompurin"
+            else -> arquivo.substringBeforeLast(".").replace("_", " ")
+                .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+        }
+    }
 
+    private fun adicionarModelo(container: LinearLayout?, arquivo: String) {
         val itemLayout = LinearLayout(requireContext()).apply {
-
             orientation = LinearLayout.HORIZONTAL
-
             gravity = Gravity.CENTER_VERTICAL
-
-            setPadding(
-                0,
-                12,
-                0,
-                12
-            )
-
+            setPadding(16, 10, 12, 10)
+            setBackgroundColor(Color.rgb(255, 239, 246))
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            )
+            ).apply { bottomMargin = 8 }
         }
 
-        /*
-         * Remove a extensão .glb e deixa o nome
-         * mais amigável para exibição.
-         *
-         * Exemplo:
-         * pikachu.glb -> Pikachu
-         * cadeira_escolar.glb -> Cadeira escolar
-         */
-        val nomeModelo = arquivo
-            .removeSuffix(".glb")
-            .removeSuffix(".GLB")
-            .replace("_", " ")
-            .replaceFirstChar {
-                if (it.isLowerCase()) {
-                    it.titlecase()
-                } else {
-                    it.toString()
-                }
-            }
-
         val nome = TextView(requireContext()).apply {
-
-            text = nomeModelo
-
-            setTextSize(
-                TypedValue.COMPLEX_UNIT_SP,
-                17f
-            )
-
-            setTextColor(Color.DKGRAY)
-
-            layoutParams = LinearLayout.LayoutParams(
-                0,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                1f
-            )
+            text = nomeAmigavel(arquivo)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, 17f)
+            setTypeface(null, Typeface.BOLD)
+            setTextColor(Color.rgb(105, 55, 82))
+            layoutParams = LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
         }
 
         val botao = Button(requireContext()).apply {
-
-            text = "Exibir"
-
+            text = "Ver na câmera"
+            setTextColor(Color.WHITE)
+            setBackgroundTintList(android.content.res.ColorStateList.valueOf(Color.rgb(213, 92, 148)))
             setOnClickListener {
-
-                /*
-                 * Informa para a tela da câmera
-                 * qual modelo deve ser carregado.
-                 */
                 sharedViewModel.selectModel(arquivo)
-
-                /*
-                 * Abre a tela de Realidade Aumentada.
-                 */
-                findNavController().navigate(
-                    R.id.navigation_camera
-                )
+                findNavController().navigate(R.id.navigation_camera)
             }
         }
 
         itemLayout.addView(nome)
         itemLayout.addView(botao)
-
         container?.addView(itemLayout)
-
-        adicionarDivisor(container)
-    }
-
-    /**
-     * Adiciona uma linha separando os modelos.
-     */
-    private fun adicionarDivisor(
-        container: LinearLayout?
-    ) {
-
-        val divisor = View(requireContext()).apply {
-
-            layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                1
-            ).apply {
-
-                topMargin = 4
-                bottomMargin = 4
-            }
-
-            setBackgroundColor(Color.LTGRAY)
-        }
-
-        container?.addView(divisor)
     }
 }
